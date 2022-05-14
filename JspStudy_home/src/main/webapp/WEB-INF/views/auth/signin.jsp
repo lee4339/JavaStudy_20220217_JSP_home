@@ -13,6 +13,7 @@
 
 <style type="text/css">
 	#container{
+		margin: 0px auto;
 		display:flex;
 		flex-direction: column;
 		justify-content: center;
@@ -29,7 +30,7 @@
 		<div>
 			<h1>로그인</h1>
 		</div>
-		<form action="">
+		<form action="/JspStudy_home/signin" method="post">
 			<div>
 				<div class="item-input">
 					<label class="item-label">사용자이름</label>
