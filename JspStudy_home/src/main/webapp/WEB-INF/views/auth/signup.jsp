@@ -45,34 +45,10 @@
 					<input type="password" name="password">
 				</div>
 			</div>
-			<button type="submit">회원가입</button>
+			<button type="button" class="signup-button">회원가입</button>
 		</form>
 	</div>
 	
-	<script type="text/javascript">
-		const itemInputs = document.querySelectorAll(".item-input");
-		const usernameInput = itemInputs[2].querySelector("input");
-		
-		usernameInput.onblur = () => {
-			
-			$.ajax({  // ajax 기본 메소드 호출 / ({객체})
-				type: "get",  //메소드
-				url: "/JspStudy_home/signup-username-check", //요청주소
-				date: {
-					username: usernameInput.value
-				},
-				dataType: "text", //응답을 받았을 때 데이터타입
-				success: function(data) { //리스폰스때 응답된 값이 들어옴
-					alert(data);
-				},
-				error: function(date) {
-					alert("비동기 통신 오류");
-				}
-			}); 
-			
-		}
-	
-		
-	</script>
+	<script type="text/javascript" src="/JspStudy_home/static/js/signup.js"></script>
 </body>
 </html>
