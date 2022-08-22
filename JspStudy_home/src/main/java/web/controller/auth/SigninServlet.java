@@ -1,4 +1,4 @@
-package web.controller;
+package web.controller.auth;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import db.DBConnectionMgr;
 import repository.AuthDao;
@@ -17,7 +18,7 @@ import web.service.AuthService;
 import web.service.AuthServiceImpl;
 
 
-@WebServlet("/signin")
+@WebServlet("/auth/signin")
 public class SigninServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AuthService authService;
@@ -34,14 +35,15 @@ public class SigninServlet extends HttpServlet {
 	
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("로그인 서블릿 get 요청");
 		request.getRequestDispatcher("/WEB-INF/views/auth/signin.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("로그인 서블릿 post 요청");
 		//로그인 등 인증관련 문제에서는 get요청시 보안이 안되기에 예외적으로 post를 사용한다.(로그인은 R)
 		response.setContentType("text/html;charset=utf-8");
-		response.setCharacterEncoding("utf-8");
 		
 		PrintWriter out = response.getWriter();
 		
@@ -51,7 +53,10 @@ public class SigninServlet extends HttpServlet {
 		Map<String, ?> msg = authService.signin(username, password);
 		
 		if(msg.containsKey("200")) {
-			
+			HttpSession session = request.getSession();
+			session.setAttribute("principal", authService.getUser(username));
+			response.sendRedirect("/JspStudy_home/profile/mypage");
+//			request.getRequestDispatcher("/WEB-INF/views/profile/mypage.jsp").forward(request, response);  // request에 setAtrribute한게 없기에 굳이 쓸 필요가 없음
 		}else {
 			StringBuilder builder = new StringBuilder();
 			builder.append("<body>");

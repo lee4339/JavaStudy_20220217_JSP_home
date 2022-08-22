@@ -1,4 +1,4 @@
-package web.controller;
+package web.controller.auth;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import repository.AuthDaoImpl;
 import web.service.AuthService;
 import web.service.AuthServiceImpl;
 
-@WebServlet("/signup")
+@WebServlet("/auth/signup")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 private AuthService authService;
@@ -33,9 +33,8 @@ private AuthService authService;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		response.setCharacterEncoding("utf-8");
+		
 		PrintWriter out = response.getWriter(); //응답으로 내보낼 출력 스트림을 얻어낸 후, 스트림에 텍스트를 기록.
 		
 		//요청한 파라메타(매개변수)들을 가져옴
@@ -48,7 +47,7 @@ private AuthService authService;
 		boolean result = authService.signup(email, name, username, password);
 		
 		if(result == true) {
-			response.sendRedirect("/JspStudy_home/signin"); //로그인화면으로 돌아감
+			response.sendRedirect("/JspStudy_home/auth/signin"); //로그인화면으로 돌아감
 		}else {
 			StringBuilder builder = new StringBuilder();
 			builder.append("<body>");

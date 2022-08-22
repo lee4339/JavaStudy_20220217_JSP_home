@@ -47,12 +47,12 @@ usernameInput.onblur = () => {
 	} else {
 		$.ajax({ // ajax 기본 메소드 호출 / ({객체})}
 			type: "get", //메소드
-			url: "/JspStudy_home/signup-username-check", //요청주소
+			url: "/JspStudy_home/auth/signup-username-check", //요청주소
 			data: {
 				"username": username
 			},
 			dataType: "text", //응답을 받았을 때 데이터 타입
-			success: function(data) { // 리스폰로 받아온 데이터 
+			success: function(data) { //리스폰으로 받아온 데이터
 				if (data == "true") {
 					alert("이미 존재하는 사용자 이름입니다.");
 					usernameCheckFlag = "true";
