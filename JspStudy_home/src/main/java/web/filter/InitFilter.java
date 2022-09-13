@@ -5,17 +5,34 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 
+import db.DBConnectionMgr;
+import repository.AuthDao;
+import repository.AuthDaoImpl;
+import repository.UserDao;
+import repository.UserDaoImpl;
+
 @WebFilter("/*") //필터를 먹일 경로
-public class EncodingFilter extends HttpFilter implements Filter {
-       
+public class InitFilter extends HttpFilter implements Filter {
+    
+	private DBConnectionMgr pool;
+	private AuthDao authDao;
+	private UserDao userDao;
+	
 	public void init(FilterConfig fConfig) throws ServletException {
+		pool = DBConnectionMgr.getInstance();
+		authDao = new AuthDaoImpl(pool);
+		userDao = new UserDaoImpl(pool);
 		
+		ServletContext servletContext = fConfig.getServletContext();
+		servletContext.setAttribute("authDao", authDao);
+		servletContext.setAttribute("userDao", userDao);
 	}
     
 

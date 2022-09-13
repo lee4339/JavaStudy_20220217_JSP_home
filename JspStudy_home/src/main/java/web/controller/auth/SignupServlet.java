@@ -3,29 +3,28 @@ package web.controller.auth;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.DBConnectionMgr;
 import repository.AuthDao;
-import repository.AuthDaoImpl;
 import web.service.AuthService;
 import web.service.AuthServiceImpl;
 
 @WebServlet("/auth/signup")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-private AuthService authService;
+	private AuthService authService;
 	
 	@Override
-	public void init() throws ServletException {
-		DBConnectionMgr pool = DBConnectionMgr.getInstance();
-		AuthDao authDao = new AuthDaoImpl(pool);
+	public void init(ServletConfig config) throws ServletException {
+		ServletContext servletContext = config.getServletContext();
 		
-		authService = new AuthServiceImpl(authDao);
+		authService = new AuthServiceImpl((AuthDao)servletContext.getAttribute("authDao"));
 	}
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
