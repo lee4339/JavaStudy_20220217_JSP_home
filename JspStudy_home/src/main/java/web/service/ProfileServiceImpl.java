@@ -29,4 +29,16 @@ public class ProfileServiceImpl implements ProfileService{
 		return flag;
 	}
 
+	@Override
+	public boolean updatePassword(int userCode, String password) {
+		int flag = userDao.updatePasswordByUserCode(userCode, password);
+		return flag != 0 ? true : false;
+	}
+
+	@Override
+	public boolean deleteUser(int userCode) {
+		int flag = userDao.deleteUser(userCode);
+		return flag != 0 ? true : false;
+	}
+
 }

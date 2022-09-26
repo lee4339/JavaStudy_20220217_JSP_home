@@ -18,7 +18,7 @@ import repository.AuthDaoImpl;
 import repository.UserDao;
 import repository.UserDaoImpl;
 
-@WebFilter("/*") //필터를 먹일 경로
+@WebFilter(filterName = "servletContextInit") //필터를 먹일 경로
 public class InitFilter extends HttpFilter implements Filter {
     
 	private DBConnectionMgr pool;
