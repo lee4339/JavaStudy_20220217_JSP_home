@@ -15,6 +15,7 @@ import javax.servlet.http.HttpFilter;
 import db.DBConnectionMgr;
 import repository.AuthDao;
 import repository.AuthDaoImpl;
+import repository.FileDao;
 import repository.UserDao;
 import repository.UserDaoImpl;
 
@@ -24,6 +25,7 @@ public class InitFilter extends HttpFilter implements Filter {
 	private DBConnectionMgr pool;
 	private AuthDao authDao;
 	private UserDao userDao;
+	private FileDao fileDao;
 	
 	public void init(FilterConfig fConfig) throws ServletException {
 		pool = DBConnectionMgr.getInstance();
@@ -33,6 +35,7 @@ public class InitFilter extends HttpFilter implements Filter {
 		ServletContext servletContext = fConfig.getServletContext();
 		servletContext.setAttribute("authDao", authDao);
 		servletContext.setAttribute("userDao", userDao);
+		servletContext.setAttribute("fileDao", fileDao);
 	}
     
 
